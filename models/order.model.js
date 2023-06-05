@@ -15,15 +15,15 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    price: {
+    fee: {
       type: Number,
       required: true,
     },
-    sellerId: {
+    lawyerId: {
       type: String,
       required: true,
     },
-    buyerId: {
+    clientId: {
       type: String,
       required: true,
     },
@@ -31,10 +31,10 @@ const OrderSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    payment_intent: {
-      type: String,
-      required: true,
-    },
+    // payment_intent: {
+    //   type: String,
+    //   required: true,
+    // },
   },
   {
     timestamps: true,

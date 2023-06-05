@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt  from "jsonwebtoken";
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -21,10 +22,6 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
-    country: {
-      type: String,
-      required: true,
-    },
     phone: {
       type: String,
       required: false,
@@ -37,10 +34,30 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+
+userSchema.methods.generateAuthToken = async function () {
+  try {
+    let token = jwt.sign({ _id: this._id }, process.env.JWT_KEY);
+    this.tokens = this.tokens.concat({ token});
+    await this.save();
+    return token;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 export default mongoose.model("User", userSchema);

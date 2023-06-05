@@ -3,15 +3,16 @@ import Conversation from "../models/conversation.model.js";
 
 export const createConversation = async (req, res, next) => {
   const newConversation = new Conversation({
-    id: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId,
-    sellerId: req.isSeller ? req.userId : req.body.to,
-    buyerId: req.isSeller ? req.body.to : req.userId,
-    readBySeller: req.isSeller,
-    readByBuyer: !req.isSeller,
+    id: req.isLawyer ? req.userId + req.body.to : req.body.to + req.userId,
+    lawyerId: req.isLawyer ? req.userId : req.body.to,
+    clientId: req.isLawyer ? req.body.to : req.userId,
+    readByLawyer: req.isLawyer,
+    readByClient: !req.isLawyer,
   });
 
   try {
     const savedConversation = await newConversation.save();
+    console.log("save conversation");
     res.status(201).send(savedConversation);
   } catch (err) {
     next(err);

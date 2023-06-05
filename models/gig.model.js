@@ -27,21 +27,13 @@ const GigSchema = new Schema(
       type: String,
       required: true,
     },
-    price: {
+    fee: {
       type: Number,
-      required: true,
-    },
-    cover: {
-      type: String,
       required: true,
     },
     images: {
       type: [String],
       required: false,
-    },
-    userId: {
-      type: String,
-      required: true,
     },
     shortTitle: {
       type: String,
@@ -50,18 +42,6 @@ const GigSchema = new Schema(
     shortDesc: {
       type: String,
       required: true,
-    },
-    deliveryTime: {
-      type: Number,
-      required: true,
-    },
-    revisionNumber: {
-      type: Number,
-      required: true,
-    },
-    features: {
-      type: [String],
-      required: false,
     },
     sales: {
       type: Number,

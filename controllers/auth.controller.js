@@ -27,21 +27,23 @@ export const login = async (req, res, next) => {
     if (!isCorrect)
       return next(createError(400, "Wrong password or username!"));
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        isLawyer: user.isLawyer,
-      },
-      process.env.JWT_KEY
-    );
-
+    // const token = jwt.sign(
+    //   {
+    //     id: user._id,
+    //     isLawyer: user.isLawyer,
+    //   },
+    //   process.env.JWT_KEY
+    // );
+    const token = await user.generateAuthToken();
     const { password, ...info } = user._doc;
-    res
-      .cookie("accessToken", token, {
+    res.cookie(
+      "accessToken",
+      token,
+      {
+        expires: new Date(Date.now() + 80 * 60000),
         httpOnly: true,
-      })
-      .status(200)
-      .send(info);
+      }
+    ).send(info);
   } catch (err) {
     next(err);
   }

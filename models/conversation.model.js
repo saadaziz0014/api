@@ -8,19 +8,19 @@ const ConversationSchema = new Schema(
       required: true,
       unique: true,
     },
-    sellerId: {
+    lawyerId: {
       type: String,
       required: true,
     },
-    buyerId: {
+    clientId: {
       type: String,
       required: true,
     },
-    readBySeller: {
+    readByLawyer: {
       type: Boolean,
       required: true,
     },
-    readByBuyer: {
+    readByClient: {
       type: Boolean,
       required: true,
     },
