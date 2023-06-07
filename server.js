@@ -8,6 +8,7 @@ import conversationRoute from "./routes/conversation.route.js";
 import messageRoute from "./routes/message.route.js";
 import reviewRoute from "./routes/review.route.js";
 import authRoute from "./routes/auth.route.js";
+import adminRoute from './routes/admin.route.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use("/api/auth", authRoute);
+app.use("/api/admin",adminRoute);
 app.use("/api/users", userRoute);
 app.use("/api/gigs", gigRoute);
 app.use("/api/orders", orderRoute);

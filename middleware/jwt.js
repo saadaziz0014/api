@@ -21,3 +21,14 @@ export const verifyToken = (req, res, next) => {
     next()
   });
 };
+
+export const verifyTokenAdmin = (req, res, next) => {
+  const token = req.cookies.accessTokenAdmin;
+  if (!token) return next(createError(401,"You are not authenticated!"))
+  
+  
+  jwt.verify(token, process.env.JWT_KEYA, async (err, payload) => {
+    if (err) return next(createError(403,"Token is not valid!"))
+    next()
+  });
+};
