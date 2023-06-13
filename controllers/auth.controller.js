@@ -4,7 +4,6 @@ import Otp from "../models/otp.model.js";
 import nodemailer from "nodemailer";
 import createError from "../utils/createError.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
   try {

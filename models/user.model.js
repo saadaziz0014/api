@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -18,7 +17,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    img: {
+    bardcard: {
+      type: String,
+      required: false,
+    },
+    dp: {
       type: String,
       required: false,
     },
@@ -31,6 +34,10 @@ const userSchema = new Schema(
       required: false,
     },
     isLawyer: {
+      type: Boolean,
+      default: false,
+    },
+    isVerify: {
       type: Boolean,
       default: false,
     },
@@ -51,13 +58,12 @@ const userSchema = new Schema(
 userSchema.methods.generateAuthToken = async function () {
   try {
     let token = jwt.sign({ _id: this._id }, process.env.JWT_KEY);
-    this.tokens = this.tokens.concat({ token});
+    this.tokens = this.tokens.concat({ token });
     await this.save();
     return token;
   } catch (err) {
     console.log(err);
   }
 };
-
 
 export default mongoose.model("User", userSchema);

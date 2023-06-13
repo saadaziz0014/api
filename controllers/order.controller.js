@@ -5,7 +5,6 @@ import Stripe from "stripe";
 export const intent = async (req, res, next) => {
   //const stripe = new Stripe(process.env.STRIPE);
   const gig = await Gig.findById(req.params.id);
-  console.log(gig);
   // const paymentIntent = await stripe.paymentIntents.create({
   //   amount: gig.price * 100,
   //   currency: "usd",
@@ -27,14 +26,14 @@ export const intent = async (req, res, next) => {
 
   res.status(200).send({
     //clientSecret: paymentIntent.client_secret,
-    success:true,
+    success: true,
   });
 };
 
 export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
-      ...(req.isLawyer ? { lawyerId: req.userId } : { clientId: req.userId })
+      ...(req.isLawyer ? { lawyerId: req.userId } : { clientId: req.userId }),
     });
 
     res.status(200).send(orders);
@@ -48,7 +47,7 @@ export const confirm = async (req, res, next) => {
     const orders = await Order.findOneAndUpdate(
       {
         //payment_intent: req.body.payment_intent,
-        _id:req.body.id,
+        _id: req.body.id,
       },
       {
         $set: {
