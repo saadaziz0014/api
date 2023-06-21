@@ -1,5 +1,4 @@
 import User from "../models/user.model.js";
-import Admin from "../models/admin.model.js";
 import Otp from "../models/otp.model.js";
 import nodemailer from "nodemailer";
 import createError from "../utils/createError.js";
@@ -7,31 +6,20 @@ import bcrypt from "bcrypt";
 
 export const register = async (req, res, next) => {
   try {
-    const hash = bcrypt.hashSync(req.body.password, 5);
-    const newUser = new User({
-      ...req.body,
-      password: hash,
-    });
+    if (req.body.isLawyer == true && !req.body.barcard) {
+      res.status(401).send("Bar Card Missing");
+    } else {
+      const hash = bcrypt.hashSync(req.body.password, 5);
+      const newUser = new User({
+        ...req.body,
+        password: hash,
+      });
 
-    await newUser.save();
-    res.status(201).send("User has been created.");
+      await newUser.save();
+      res.status(201).send("User has been created.");
+    }
   } catch (err) {
-    next(err);
-  }
-};
-
-export const registerAdmin = async (req, res, next) => {
-  try {
-    const hash = bcrypt.hashSync(req.body.password, 5);
-    const email = req.body.email;
-    const admin = new Admin({
-      email,
-      password: hash,
-    });
-
-    await admin.save();
-    res.status(201).send("Admin Saved");
-  } catch (err) {
+    console.log(err);
     next(err);
   }
 };

@@ -2,9 +2,7 @@ import Gig from "../models/gig.model.js";
 import createError from "../utils/createError.js";
 
 export const createGig = async (req, res, next) => {
-  if (!req.isLawyer)
-  {
-    console.log("error");
+  if (!req.isLawyer) {
     return next(createError(403, "Only lawyer can create a offer!"));
   }
   const newGig = new Gig({
@@ -13,8 +11,10 @@ export const createGig = async (req, res, next) => {
   });
   try {
     const savedGig = await newGig.save();
+    console.log("submit");
     res.status(201).json(savedGig);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };

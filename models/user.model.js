@@ -17,11 +17,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    bardcard: {
-      type: String,
-      required: false,
-    },
-    dp: {
+    barcard: {
       type: String,
       required: false,
     },
@@ -40,6 +36,10 @@ const userSchema = new Schema(
     isVerify: {
       type: Boolean,
       default: false,
+    },
+    profile: {
+      type: String,
+      required: false,
     },
     tokens: [
       {
